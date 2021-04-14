@@ -1,0 +1,18 @@
+:root {
+
+  --negro: #1F363D;
+  --dorado: #C1AE7C;
+  --rojo: #FFA0FD;
+  --verde: #21A39F;
+  --blanco: #ECF8F8;
+  
+  }
+  
+  html,body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      width: 100vw;
+      overflow-x: hidden;
+  }
+  
