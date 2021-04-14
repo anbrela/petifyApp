@@ -29,7 +29,7 @@ const signup = async (req, res) => {
     } else {
       const savedUser = newUser.save();
 
-      const token = jwt.sign({ id: savedUser._id }, "petify", {
+      const token = jwt.sign({ id: savedUser._id }, process.env.SECRET, {
         expiresIn: 86400,
       });
 
@@ -74,7 +74,7 @@ const signin = async (req, res) => {
       .status(401)
       .json({ token: null, message: "la contraseña no coincide" });
 
-  const token = jwt.sign({ id: userFound._id }, "petify", {
+  const token = jwt.sign({ id: userFound._id }, process.env.SECRET, {
     expiresIn: 86400,
   });
 

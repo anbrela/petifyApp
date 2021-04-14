@@ -7,7 +7,7 @@ const verifyToken = async (req, res, next) => {
 
     if (!token) return res.status(403).json({ message: "no token" });
 
-    const decoded = jwt.verify(token, "pefify");
+    const decoded = jwt.verify(token, process.env.SECRET);
     req.userId = decoded.id;
     next();
   } catch (error) {

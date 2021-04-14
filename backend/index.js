@@ -9,7 +9,7 @@ const port = 4000;
 
 //Conectar a la DB
 mongoose
-  .connect("mongodb+srv://huppy:huppy@cluster0.cjgqz.mongodb.net/Huppy?retryWrites=true&w=majority", {
+  .connect("mongodb+srv://" + process.env.USER + ":" + process.env.PASSWORD + "@cluster0.cjgqz.mongodb.net/Huppy?retryWrites=true&w=majority", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false,

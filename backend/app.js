@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors());
 
 //añadir prefijos a rutas o cargar rutas
-/* app.use("/api/pet", petRoutes);*/
+app.use("/api/pet", petRoutes);
 app.use("/api/users", userRoutes);
 
 // Exportar módulo (fichero actual)
