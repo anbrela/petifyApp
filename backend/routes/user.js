@@ -5,10 +5,6 @@ const router = express.Router();
 //De momento no necesitamos el validador de token, pero en un futuro sí.
 const authJwt = require("../middlewares/auth");
 
-//subir las imagenes
-/* const multipart = require("connect-multiparty");
-const md_upload = multipart({ uploadDir: "./upload/articles" }); */
-
 //Controlador con funciones del usuario.
 const userController = require("../controllers/user");
 
