@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import "./Login.css";
-import background from "../../Images/background.jpg";
+import cat from "../../Images/cat.svg";
+import dog from "../../Images/dog.svg";
+import logo from "../../Images/Huppy.png";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -44,6 +46,24 @@ const CssTextField = withStyles({
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: "white",
     },
+
+    input: {
+      "&:-webkit-autofill": {
+        WebkitBoxShadow: "0 0 0 1000px white inset",
+        background: "none",
+      },
+      "&:-webkit-autofill-selected": {
+        background: "none !important",
+      },
+
+      "&:-internal-autofill": {
+        background: "none !important",
+      },
+
+      "&:-internal-autofill-selected": {
+        background: "none !important",
+      },
+    },
   },
 })(TextField);
 
@@ -72,14 +92,15 @@ const useStyles = makeStyles((theme) => ({
 
 const PinkSwitch = withStyles({
   switchBase: {
-    color: "#ecf8f8",
+    color: "#ffa0fd",
     "&$checked": {
-      color: "#ecf8f8",
+      color: "#ffa0fd",
     },
     "&$checked + $track": {
-      backgroundColor: "#ecf8f8",
+      backgroundColor: "#ffa0fd",
     },
   },
+
   checked: {},
   track: {},
 })(Switch);
@@ -97,16 +118,27 @@ const Login = () => {
   return (
     <div className="container-login">
       <div className="wrapper-login">
-        <h2>huppy</h2>
+        <div className="logo">
+          <img src={logo} alt="logo de huppy" />
+        </div>
+        <div className="switch-login">
+          <span className="circle-span">
+            <img src={cat} alt="adoptar gato huppy" />
+          </span>
 
-        <PinkSwitch
-          checked={state.checkedA}
-          onChange={handleChange}
-          name="checkedA"
-        />
+          <PinkSwitch
+            checked={state.checkedA}
+            onChange={handleChange}
+            name="checkedA"
+          />
+          <span className="circle-span">
+            <img src={dog} alt="adoptar perro huppy" />
+          </span>
+        </div>
 
-        <form className={classes.form} noValidate autoComplete="off">
+        <form className={classes.form} noValidate autoComplete="new-password">
           <CssTextField
+            autoComplete="off"
             className={classes.margin}
             label="Email o teléfono"
             labelClassName={classes.root}
@@ -115,13 +147,17 @@ const Login = () => {
           />
           <CssTextField
             className={classes.margin}
+            autoComplete="new-password"
             label="Contraseña"
             variant="outlined"
             id="standard-password-input"
             label="Password"
             type="password"
-            autoComplete="current-password"
           />
+          <div className="login-info">
+            <button className="btn-text">¿Contraseña olvidada?</button>
+            <button className="btn-text-destacado">Registro</button>
+          </div>
           <Button className={classes.root}>Enviar</Button>
         </form>
       </div>
