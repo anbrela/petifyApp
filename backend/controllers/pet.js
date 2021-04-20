@@ -59,6 +59,7 @@ const uploadPetPhoto = async (req, res) => {
   parsePath = path.parse(file_path);
 
   fileComplete = parsePath.base;
+  console.log(fileComplete);
 
   file_name = parsePath.name;
 
@@ -87,7 +88,7 @@ const uploadPetPhoto = async (req, res) => {
         console.log(newFileInfo);
         Pet.findOneAndUpdate(
           { _id: petId },
-          { image: file_name },
+          { image: fileComplete },
           { new: true },
           (err, petUpdated) => {
             if (err || !petUpdated) {
@@ -113,7 +114,7 @@ const uploadPetPhoto = async (req, res) => {
 
 const getPetImage = async (req, res) => {
   const file = await req.params.image;
-  var path_file = "./images/" + file;
+  var path_file = "./images/optimized/" + file;
   fs.access(path_file, fs.constants.F_OK, (err) => {
     if (err) {
       return res.status(500).send({

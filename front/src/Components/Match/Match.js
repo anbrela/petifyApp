@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Match.css";
+import axios from "axios";
 import logo from "../../Images/Huppy.png";
 import { FaPaw } from "react-icons/fa";
 import { FaUserAlt } from "react-icons/fa";
@@ -9,6 +10,21 @@ import Dog from "../../Images/dog.jpg";
 import TinderCard from "react-tinder-card";
 
 const Match = () => {
+  const [pets, setPets] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/pet/",
+    })
+      .then((res) => {
+        setPets(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="container-match">
       <div className="header-container">
@@ -30,19 +46,26 @@ const Match = () => {
         </div>
       </div>
 
-      <div className="image">
-        <div className="container-image">
-          <div className="pet-info">
-            <div className="pet-name">
-              <p>Mambo, 3</p>
-              <p>
-                <i className="fas fa-map-marker-alt"></i>Lugo
-              </p>
+      {pets.map((pet) => {
+        <div className="image">
+          <div className="container-image">
+            <TinderCard
+              className="swipe"
+              key={pet.id}
+              preventSwipe={["up", "down"]}
+            ></TinderCard>
+            <div className="pet-info">
+              <div className="pet-name">
+                <p></p>
+                <p>
+                  <i className="fas fa-map-marker-alt"></i>Lugo
+                </p>
+              </div>
             </div>
+            <img src={"http://localhost:4000/api/pet/" + pet.image} alt="" />
           </div>
-          <img src={Dog} alt="" />
-        </div>
-      </div>
+        </div>;
+      })}
 
       <div className="footer">
         <li className="corazon">
