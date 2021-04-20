@@ -57,12 +57,12 @@ export const UserReducer = (props) => {
   const [user, setUser] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    if (cookies.espectaculo)
+    if (cookies.huppy)
       axios({
         method: "GET",
         url: process.env.REACT_APP_API_URL + "/api/users/loginByToken",
         headers: {
-          "x-access-token": cookies.espectaculo,
+          "x-access-token": cookies.huppy,
         },
       })
         .then((res) => {
