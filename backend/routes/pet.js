@@ -12,8 +12,6 @@ const petController = require("../controllers/pet");
 const multipart = require("connect-multiparty");
 const md_upload = multipart({ uploadDir: "./images/originals" });
 
-
-
 //Ruta para añadir una mascota
 router.post("/", petController.newPet);
 
@@ -23,12 +21,8 @@ router.get("/", petController.getPets);
 // Ruta para devolver todas las mascotas
 router.get("/:petId", petController.getPet);
 
-router.post(
-    "/upload-image/:petId",
-    md_upload,
-    petController.uploadPetPhoto);
+router.post("/upload-image/:petId", md_upload, petController.uploadPetPhoto);
 
-
-
+router.get("/get-image/:image", petController.getPetImage);
 
 module.exports = router;

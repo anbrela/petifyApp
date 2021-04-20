@@ -10,7 +10,7 @@ const petSchema = new Schema(
       required: true,
     },
     age: String,
-    photo: String,
+    image: String,
     location: String,
     race: String,
     size: String,
