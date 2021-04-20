@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom"
 import "./Match.css";
 import axios from "axios";
-import logo from "../../Images/Huppy.png";
-import { FaPaw } from "react-icons/fa";
-import { FaUserAlt } from "react-icons/fa";
+import Header from "../Header/Header"
+import { BiCurrentLocation } from "react-icons/bi";
+import TinderCard from "react-tinder-card";
+import {FaDog} from "react-icons/fa"
 import { RiHeart2Fill } from "react-icons/ri";
 import { ImCross } from "react-icons/im";
-import { BiCurrentLocation } from "react-icons/bi";
-import Dog from "../../Images/dog.jpg";
-import TinderCard from "react-tinder-card";
+
 
 const Match = () => {
   const [pets, setPets] = useState({
@@ -38,43 +38,28 @@ const Match = () => {
 
   return (
     <div className="container-match">
-      <div className="header-container">
-        <div className="logo-match">
-          <img src={logo} alt="adopcion de perros happy" />
-        </div>
-
-        <div className="container-header">
-          <li className="user">
-            <FaUserAlt />
-          </li>
-          <li className="paw">
-            <FaPaw />
-          </li>
-          <li className="link">
-            <RiHeart2Fill />
-            <div className="new"></div>{" "}
-          </li>
-        </div>
-      </div>
+      <Header />
       <div className="image">
         <div className="container-image">
           {pets.status != null ? (
             lista.map((pet) => (
+              <>             >
               <TinderCard
                 className="swipe"
-                key={pet.name}
+                
                 onSwipe={onSwipe}
                 preventSwipe={["up", "down"]}
               >
                 <div
                   className="card"
+                  key={pet.name}
                   style={{
                     backgroundImage: `url(${
                       "http://localhost:4000/api/pet/get-image/" + pet.image
                     })`,
                   }}
                 >
-                  <div className="pet-info">
+                  <div className="pet-info" key={pet.age}>
                     <div className="pet-name">
                       <p>
                         {pet.name} , {pet.age}
@@ -83,22 +68,31 @@ const Match = () => {
                         <BiCurrentLocation /> <span>Lugo</span>
                       </div>
                     </div>
+                   
                   </div>
                 </div>
+               
+
               </TinderCard>
+               <div className="footer" key={pet.location}>
+               <li className="corazon">
+                 <RiHeart2Fill />
+               </li>
+               <li className="more">
+                      <Link to={"/" + pet._id}>
+                        <FaDog />
+                      </Link>
+                      </li>
+               <li className="unmatch">
+                 <ImCross />
+               </li>
+             </div>
+             </>
             ))
           ) : (
             <span>No hay perros</span>
           )}
         </div>
-      </div>
-      <div className="footer">
-        <li className="corazon">
-          <RiHeart2Fill />
-        </li>
-        <li className="unmatch">
-          <ImCross />
-        </li>
       </div>
     </div>
   );

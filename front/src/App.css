@@ -14,9 +14,11 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: "Ubuntu", sans-serif;
   width: 100vw;
   overflow-x: hidden;
-  font-family: "Ubuntu", sans-serif;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 img {

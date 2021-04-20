@@ -8,7 +8,7 @@ var path = require("path");
 const sharp = require("sharp");
 
 const newPet = async (req, res) => {
-  const { name, image, age, location, size, personality, user } = req.body;
+  const { name, image, age, location, bio, size, personality, user } = req.body;
 
   console.log(req.body);
 
@@ -16,6 +16,7 @@ const newPet = async (req, res) => {
     name,
     image,
     age,
+    bio,
     location,
     size,
     personality,
