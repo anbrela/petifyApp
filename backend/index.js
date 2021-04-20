@@ -1,15 +1,13 @@
 //Imports de mongoose, .env y app.
-const app = require("./app");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const app = require("./app");
+const mongoose = require("mongoose");
 
 const port = 4000;
-
-
 //Conectar a la DB
 mongoose
-  .connect("mongodb+srv://" + process.env.USER + ":" + process.env.PASSWORD + "@cluster0.cjgqz.mongodb.net/Huppy?retryWrites=true&w=majority", {
+  .connect(process.env.URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false,

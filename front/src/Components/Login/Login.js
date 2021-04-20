@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Login.css";
 import cat from "../../Images/cat.svg";
 import dog from "../../Images/dog.svg";
@@ -107,12 +108,13 @@ const PinkSwitch = withStyles({
 
 const Login = () => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    checkedA: true,
+  const [animal, setAnimal] = React.useState({
+    dog: true,
   });
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    console.log("el evento", event);
+    setAnimal({ ...animal, [event.target.name]: event.target.checked });
   };
 
   return (
@@ -126,11 +128,7 @@ const Login = () => {
             <img src={cat} alt="adoptar gato huppy" />
           </span>
 
-          <PinkSwitch
-            checked={state.checkedA}
-            onChange={handleChange}
-            name="checkedA"
-          />
+          <PinkSwitch checked={animal.dog} onChange={handleChange} name="dog" />
           <span className="circle-span">
             <img src={dog} alt="adoptar perro huppy" />
           </span>
@@ -156,7 +154,9 @@ const Login = () => {
           />
           <div className="login-info">
             <button className="btn-text">¿Contraseña olvidada?</button>
-            <button className="btn-text-destacado">Registro</button>
+            <button className="btn-text-destacado">
+              <Link to="/petlove">Registro </Link>
+            </button>
           </div>
           <Button className={classes.root}>Enviar</Button>
         </form>
