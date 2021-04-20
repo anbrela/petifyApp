@@ -13,16 +13,17 @@ const Match = () => {
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: "http://localhost:4000/api/pet/",
-    })
-      .then((res) => {
-        setPets(res.data);
+    if (pets !== [])
+      axios({
+        method: "GET",
+        url: "http://localhost:4000/api/pet/",
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => {
+          setPets(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }, []);
 
   return (
@@ -45,8 +46,7 @@ const Match = () => {
           </li>
         </div>
       </div>
-
-      {pets.map((pet) => {
+      {pets?.map((pet) => {
         <div className="image">
           <div className="container-image">
             <TinderCard
@@ -56,13 +56,13 @@ const Match = () => {
             ></TinderCard>
             <div className="pet-info">
               <div className="pet-name">
-                <p></p>
+                <p>{pet.name}</p>
                 <p>
                   <i className="fas fa-map-marker-alt"></i>Lugo
                 </p>
               </div>
             </div>
-            <img src={"http://localhost:4000/api/pet/" + pet.image} alt="" />
+            <img src="" alt="" />
           </div>
         </div>;
       })}
