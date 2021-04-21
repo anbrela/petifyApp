@@ -1,0 +1,34 @@
+
+.card {
+    position: relative;
+    height: 200px;
+}
+
+.pet-info {
+    height: 70px;
+}
+
+.pet-info p {
+    font-size: 20px;
+}
+
+.pet-info span {
+    font-size: 15px;
+}
+
+.image {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: red;
+} 
+
+.bio {
+    font-size: 12px;
+    width: 80vw;
+    height: 200px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}

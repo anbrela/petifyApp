@@ -154,7 +154,8 @@ const Login = () => {
     }
   };
 
-  const sendLogin = () => {
+  const sendLogin = (e) => {
+    e.preventDefault()
     if (!errores.passwordError && !errores.emailError) {
       axios({
         method: "POST",
@@ -216,12 +217,12 @@ const Login = () => {
           </span>
         </div>
 
-        <form className={classes.form} noValidate autoComplete="new-password">
+        <form className={classes.form} onSubmit={sendLogin}  noValidate autoComplete="new-password">
           <CssTextField
             autoComplete="off"
             className={classes.margin}
             label="Email o teléfono"
-            labelClassName={classes.root}
+            labelclassname={classes.root}
             variant="outlined"
             value={values.email}
             onChange={handleEmailChange}
@@ -244,7 +245,7 @@ const Login = () => {
               <Link to="/petlove">Registro </Link>
             </button>
           </div>
-          <Button onClick={sendLogin} className={classes.root}>
+          <Button className={classes.root}>
             Enviar
           </Button>
         </form>

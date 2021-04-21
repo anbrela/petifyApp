@@ -18,8 +18,43 @@ const Match = () => {
     status: null,
   });
 
+
+  // PROBLEMA AQUÍ CON LOS ARRAYS (FUNCIONA A VECES; CUANDO QUIERE EL HDP) (FIXED)
+  //TAMBIËN USER REDUCER EXPLICAR O QUIZÁS HACER PARA ESTA LIKE LIST
+  // PROBLEMA CON FOOTER UTILIZAR ID
+
+
+
+   useEffect(() => {
+    if(pets.status === "success") {
+    const petArray = pets.lista;
+    console.log(pets.lista)
+    const dislikedArray = user.dislikedPets;
+    console.log(dislikedArray)
+
+    petArray.forEach(element => {
+     const found = dislikedArray.includes(element._id);
+     console.log(found);
+
+     if (found === true) {
+      const index = petArray.findIndex((e) => e._id === element._id);
+      petArray.splice(index, 1);
+      console.log(petArray);
+      setPets(petArray);
+     } else {
+       console.log("todo correcto")
+     }
+    
+    
+    });
+  }
+
+   }, [pets.status]);
+    
+
+
+
   useEffect(() => {
-    if (pets !== [])
       axios({
         method: "GET",
         url: "http://localhost:4000/api/pet/",
@@ -79,13 +114,20 @@ const Match = () => {
       case "left": {
         user.likedPets.push(id);
         updateLikedList();
+        return null;
       }
       case "right": {
         user.dislikedPets.push(id);
         updateDisikedList();
+        return null;
       }
     }
   };
+
+
+  
+
+
 
   return (
     <>
