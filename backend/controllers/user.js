@@ -5,7 +5,16 @@ const jwt = require("jsonwebtoken");
 /* const mailing = require("./mail");
  */
 const signup = async (req, res) => {
-  const { username, email, password, address, phone, contact } = req.body;
+  const {
+    username,
+    email,
+    likedPets,
+    dislikedPets,
+    password,
+    address,
+    phone,
+    contact,
+  } = req.body;
 
   const newUser = new User({
     username,
@@ -14,6 +23,8 @@ const signup = async (req, res) => {
     address,
     phone,
     contact,
+    likedPets,
+    dislikedPets,
   });
 
   var query = { email: req.body.email };
@@ -38,6 +49,8 @@ const signup = async (req, res) => {
         userID: savedUser._id,
         username: savedUser.username,
         expires: 86400,
+        likedPets: savedUser.likedPets,
+        dislikedPets: savedUser.dislikedPets,
       });
     }
   });
@@ -88,10 +101,48 @@ const signin = async (req, res) => {
     userID: userFound._id,
     username: userFound.username,
     expires: 86400,
+    likedPets: userFound.likedPets,
+    dislikedPets: userFound.dislikedPets,
   });
+};
+
+const loginByToken = async (req, res) => {
+  const token = req.headers["x-access-token"];
+  let decoded = jwt.verify(token, process.env.SECRET);
+  const user = await User.findById(decoded.id);
+  if (user)
+    return res.status(200).json({
+      token: token,
+      userID: user._id,
+      username: user.username,
+      expires: 86400,
+      verified: null,
+      likedPets: user.likedPets,
+      dislikedPets: user.dislikedPets,
+    });
+};
+
+const getUserById = async (req, res) => {
+  const user = await User.findById(req.params.userId);
+  return res.status(200).json(user);
+};
+
+const userUpdatedById = async (req, res) => {
+  const userUpdated = await User.findByIdAndUpdate(
+    req.params.userId,
+    req.body,
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json(userUpdated);
 };
 
 module.exports = {
   signup,
   signin,
+  loginByToken,
+  getUserById,
+  userUpdatedById,
 };

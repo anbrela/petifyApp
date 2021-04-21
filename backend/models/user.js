@@ -26,6 +26,18 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "User",
     },
+    likedPets: [
+      {
+        type: String,
+        default: "",
+      },
+    ],
+    dislikedPets: [
+      {
+        type: String,
+        default: "",
+      },
+    ],
   },
   {
     timestamps: true,

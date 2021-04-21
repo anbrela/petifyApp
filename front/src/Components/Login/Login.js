@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 import cat from "../../Images/cat.svg";
@@ -8,6 +8,9 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Switch from "@material-ui/core/Switch";
+import { useHistory } from "react-router-dom";
+import { UserContext } from "../UserDispatch";
+import axios from "axios";
 
 const CssTextField = withStyles({
   root: {
@@ -107,6 +110,85 @@ const PinkSwitch = withStyles({
 })(Switch);
 
 const Login = () => {
+  let history = useHistory();
+
+  const [user, setUser] = useContext(UserContext);
+
+  const [values, setValues] = useState({ email: "", password: "" });
+  const [resetPass, setResetPass] = useState(false);
+
+  const [errores, setErrores] = useState({
+    emailError: null,
+    passwordError: null,
+    loginError: null,
+  });
+
+  const errorLogin = () => {
+    setErrores({ ...errores, loginError: false });
+  };
+
+  const handleEmailChange = (e) => {
+    setValues({ ...values, email: e.currentTarget.value });
+
+    if (typeof e.currentTarget.value !== "undefined") {
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      );
+      if (!pattern.test(e.currentTarget.value)) {
+        setErrores({ ...errores, emailError: true });
+      } else {
+        setErrores({ ...errores, emailError: false });
+      }
+    }
+  };
+  const handlePasswordChange = (e) => {
+    setValues({ ...values, password: e.currentTarget.value });
+
+    if (e.currentTarget.value.length < 6) {
+      setErrores({
+        ...errores,
+        passwordError: "La contraseña tiene que ser mayor de 6 carácteres",
+      });
+    } else {
+      setErrores({ ...errores, passwordError: false });
+    }
+  };
+
+  const sendLogin = () => {
+    if (!errores.passwordError && !errores.emailError) {
+      axios({
+        method: "POST",
+        url: "http://localhost:4000/api/users/signin",
+        data: {
+          email: values.email,
+          password: values.password,
+        },
+      })
+        .then((res) => {
+          if (res.data.token) {
+            setUser({
+              type: "login",
+              token: res.data.token,
+              user: res.data.username,
+              userID: res.data.userID,
+              expires: res.data.expires,
+              dislikedPets: res.data.dislikedPets,
+              likedPets: res.data.likedPets,
+            });
+            history.push("/petlove");
+          }
+        })
+        .catch((error) => {
+          setResetPass(!resetPass);
+          setErrores({
+            ...errores,
+            loginError: "La contraseña y el usuario no se corresponden",
+          });
+        });
+    } else {
+    }
+  };
+
   const classes = useStyles();
   const [animal, setAnimal] = React.useState({
     dog: true,
@@ -141,6 +223,8 @@ const Login = () => {
             label="Email o teléfono"
             labelClassName={classes.root}
             variant="outlined"
+            value={values.email}
+            onChange={handleEmailChange}
             id="custom-css-outlined-input"
           />
           <CssTextField
@@ -148,6 +232,8 @@ const Login = () => {
             autoComplete="new-password"
             label="Contraseña"
             variant="outlined"
+            value={values.password}
+            onChange={handlePasswordChange}
             id="standard-password-input"
             label="Password"
             type="password"
@@ -158,7 +244,9 @@ const Login = () => {
               <Link to="/petlove">Registro </Link>
             </button>
           </div>
-          <Button className={classes.root}>Enviar</Button>
+          <Button onClick={sendLogin} className={classes.root}>
+            Enviar
+          </Button>
         </form>
       </div>
     </div>

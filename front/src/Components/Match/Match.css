@@ -20,13 +20,11 @@
   overflow: hidden !important;
 }
 
-
 .image img {
   width: 100%;
   height: 100%;
   border-radius: 10px;
 }
-
 
 .location {
   display: flex;
@@ -89,10 +87,7 @@
   justify-content: flex-start;
   padding-left: 20px;
   border-radius: 0px 0px 20px 20px;
-
 }
-
-
 
 .pet-name {
   border-radius: 0px 0px 20px 20px;
@@ -110,12 +105,12 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;}
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 
 .swipe {
   position: absolute;
 }
-
 
 .footer {
   width: 100%;
@@ -154,6 +149,7 @@
   align-items: center;
   justify-content: center;
   color: var(--negro);
+  position: absolute;
 }
 
 .more a {
@@ -171,4 +167,10 @@
 
 .footer li i {
   font-size: 22px;
+}
+
+.wrapper {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }

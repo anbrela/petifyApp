@@ -19,7 +19,7 @@ router.post("/", petController.newPet);
 router.get("/", petController.getPets);
 
 // Ruta para devolver todas las mascotas
-router.get("/:petId", petController.getPet);
+router.get("/profile/:petId", petController.getPet);
 
 router.post("/upload-image/:petId", md_upload, petController.uploadPetPhoto);
 

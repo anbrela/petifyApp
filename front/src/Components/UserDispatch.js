@@ -9,9 +9,10 @@ export const UserReducer = (props) => {
     token: null,
     userID: null,
     user: null,
-    wishlist: null,
     Logged: null,
     search: null,
+    likedPets: null,
+    dislikedPets: null,
   };
   const [cookies, setCookie, removeCookie] = useCookies(["huppy"]);
 
@@ -27,7 +28,8 @@ export const UserReducer = (props) => {
           token: action.token,
           user: action.user,
           userID: action.userID,
-          userID: action.userID,
+          likedPets: action.likedPets,
+          dislikedPets: action.dislikedPets,
           Logged: true,
         };
       case "logout":
@@ -44,12 +46,9 @@ export const UserReducer = (props) => {
           token: action.token,
           user: action.user,
           userID: action.userID,
+          likedPets: action.likedPets,
+          dislikedPets: action.dislikedPets,
           Logged: true,
-        };
-
-      case "changeSearch":
-        return {
-          search: action.search,
         };
     }
   };
@@ -60,7 +59,7 @@ export const UserReducer = (props) => {
     if (cookies.huppy)
       axios({
         method: "GET",
-        url: process.env.REACT_APP_API_URL + "/api/users/loginByToken",
+        url: "http://localhost:4000/api/users/loginByToken",
         headers: {
           "x-access-token": cookies.huppy,
         },
@@ -72,6 +71,8 @@ export const UserReducer = (props) => {
             user: res.data.username,
             userID: res.data.userID,
             expires: res.data.expires,
+            likedPets: res.data.likedPets,
+            dislikedPets: res.data.dislikedPets,
           });
         })
         .catch((error) => {});

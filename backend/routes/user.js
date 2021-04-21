@@ -14,4 +14,12 @@ router.post("/signup", userController.signup);
 //Ruta para hacer login.
 router.post("/signin", userController.signin);
 
+router.get("/loginByToken", authJwt.verifyToken, userController.loginByToken);
+
+//updateUser
+router.put("/:userId", authJwt.verifyToken, userController.userUpdatedById);
+
+//get user
+router.get("/:userId", userController.getUserById);
+
 module.exports = router;
